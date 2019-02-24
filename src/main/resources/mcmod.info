@@ -1,0 +1,16 @@
+[{
+	"modid": "JadedMenu",
+	"name": "JadedMenu",
+	"description": "Custom Jaded Packs menu",
+	"version": "@VERSION@",
+	"mcversion": "1.6.4",
+	"url": "",
+	"updateUrl": "",
+	"authorList": [
+		"Developaws"
+	],
+	"credits": "",
+	"logoFile": "",
+	"screenshots": [],
+	"dependencies": []
+}]
