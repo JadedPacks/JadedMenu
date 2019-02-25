@@ -3,6 +3,7 @@ package com.jadedpacks.jadedmenu.gui;
 import com.jadedpacks.jadedmenu.utils.Render;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -11,8 +12,8 @@ public class GuiCustomButton extends GuiButton {
 	private ResourceLocation texture = new ResourceLocation("textures/gui/widgets.png");
 	private String hoverText;
 
-	public GuiCustomButton(final int buttonID, final int posX, final int posY, final int width, final int height, String text, String hoverText) {
-		super(buttonID, posX, posY, width, height, text);
+	public GuiCustomButton(final int buttonID, final int xPosition, final int yPosition, final int width, final int height, String text, String hoverText) {
+		super(buttonID, xPosition, yPosition, width, height, text);
 		this.hoverText = hoverText;
 	}
 
@@ -34,7 +35,7 @@ public class GuiCustomButton extends GuiButton {
 			} else if(hovered) {
 				color = 16777120;
 			}
-			drawCenteredString(mc.fontRenderer, hovered ? hoverText : displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, color);
+			drawCenteredString(mc.fontRenderer, I18n.getString(hovered && hoverText != null ? hoverText : displayString), this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, color);
 		}
 	}
 }
