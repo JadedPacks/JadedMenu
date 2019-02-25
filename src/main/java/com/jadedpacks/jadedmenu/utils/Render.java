@@ -3,17 +3,6 @@ package com.jadedpacks.jadedmenu.utils;
 import org.lwjgl.opengl.GL11;
 
 public class Render {
-	public static void drawBackground(final int width, final int height) {
-		final int imageWidth = GL11.glGetTexLevelParameteri(3553, 0, 4096),
-			imageHeight = GL11.glGetTexLevelParameteri(3553, 0, 4097);
-		final float factorWidth = width / imageWidth,
-			factorHeight = height / imageHeight,
-			factor = factorWidth > factorHeight ? factorWidth : factorHeight;
-		int drawWidth = (int) (imageWidth * factorWidth),
-			drawHeight = (int) (imageWidth * factor);
-		drawPartialImage(0, 0, 0, 0, drawWidth, drawHeight, imageWidth, imageHeight);
-	}
-
 	public static void drawPartialImage(final int posX, final int posY, final int imageX, final int imageY, final int width, final int height, final int imagePartWidth, final int imagePartHeight) {
 		final double einsTeilerWidth = 1.0 / GL11.glGetTexLevelParameteri(3553, 0, 4096),
 			uvWidth = einsTeilerWidth * imagePartWidth,
