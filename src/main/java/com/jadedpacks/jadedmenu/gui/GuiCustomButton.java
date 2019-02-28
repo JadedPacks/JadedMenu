@@ -9,16 +9,16 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class GuiCustomButton extends GuiButton {
-	// TODO: Custom texture
-	private ResourceLocation texture = new ResourceLocation("jadedmenu:textures/gui/button3.png");
+	private ResourceLocation texture;
 	private String hoverText;
 	private Position position;
 	IAction action;
 
-	GuiCustomButton(final int buttonID, final Position position, final int xPosition, final int yPosition, final int width, final int height, String text, String hoverText, IAction action) {
+	GuiCustomButton(final int buttonID, final Position position, final int xPosition, final int yPosition, final int width, final int height, String text, String hoverText, String texture, IAction action) {
 		super(buttonID, xPosition, yPosition, width, height, text);
 		this.position = position;
 		this.hoverText = hoverText;
+		this.texture = new ResourceLocation(texture == null ? "jadedmenu:textures/gui/button3.png" : texture);
 		this.action = action;
 	}
 

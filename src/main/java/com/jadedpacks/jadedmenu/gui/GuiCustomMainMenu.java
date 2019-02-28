@@ -23,16 +23,16 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 		new GuiCustomImage(Position.TOP_CENTER, -100, -40, 200, 1100, "jadedmenu:textures/gui/glass.png", null),
 		new GuiCustomImage(Position.TOP_CENTER, -40, 20, 80, 80, "jadedmenu:textures/gui/icon1.png", null)
 	);
-	private final ResourceLocation resourceBackground = new ResourceLocation("jadedmenu:textures/gui/background/screen.png");
+	private final ResourceLocation resourceBackground = new ResourceLocation("jadedmenu:textures/gui/background.png");
 	private String splashText = null;
 
 	public void initGui() {
 		buttonList.addAll(Arrays.asList(
-			new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, ActionOpenGui.SINGLEPLAYER),
-			new GuiCustomButton(6001, Position.CENTER, 1, 50, 70, 20, "menu.multiplayer", null, ActionOpenGui.MULTIPLAYER),
-			new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null), // TODO: Open custom gui
-			new GuiCustomButton(6003, Position.CENTER, 1, 71, 70, 20, "menu.quit", "Awww, don't leave", new ActionQuit()),
-			new GuiCustomButton(6004, Position.BOTTOM_CENTER, -25, -25, 50, 20, "Patreon", null, new ActionOpenLink("http://google.com")) // TODO: Get a patreon link?
+			new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, null, ActionOpenGui.SINGLEPLAYER),
+			new GuiCustomButton(6001, Position.CENTER, 1, 50, 70, 20, "menu.multiplayer", null, null, ActionOpenGui.MULTIPLAYER),
+			new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, null), // TODO: Open custom gui
+			new GuiCustomButton(6003, Position.CENTER, 1, 71, 70, 20, "menu.quit", "Awww, don't leave", "jadedmenu:textures/gui/buttonexit.png", new ActionQuit()),
+			new GuiCustomButton(6004, Position.BOTTOM_CENTER, -25, -25, 50, 20, "Patreon", null, null, new ActionOpenLink("http://google.com")) // TODO: Get a patreon link?
 		));
 	}
 
