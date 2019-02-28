@@ -1,7 +1,7 @@
 package com.jadedpacks.jadedmenu.gui.action;
 
+import com.jadedpacks.jadedmenu.gui.GuiCustomConfirmOpenLink;
 import com.jadedpacks.jadedmenu.gui.GuiCustomMainMenu;
-import net.minecraft.client.gui.GuiConfirmOpenLink;
 
 public class ActionOpenLink implements IAction {
 	private String link;
@@ -12,8 +12,7 @@ public class ActionOpenLink implements IAction {
 
 	@Override
 	public void run(GuiCustomMainMenu menu) {
-		GuiConfirmOpenLink guiconfirmopenlink = new GuiConfirmOpenLink(menu, link, -1, true);
-		guiconfirmopenlink.func_92026_h();
+		GuiCustomConfirmOpenLink guiconfirmopenlink = new GuiCustomConfirmOpenLink(menu, link);
 		menu.mc.displayGuiScreen(guiconfirmopenlink);
 	}
 }

@@ -15,24 +15,24 @@ public enum ActionOpenGui implements IAction {
 	@Override
 	public void run(GuiCustomMainMenu menu) {
 		switch(this) {
-			case MODS: {
+			case MODS:
 				menu.mc.displayGuiScreen(new GuiModList(menu));
-			}
-			case SINGLEPLAYER: {
+				break;
+			case SINGLEPLAYER:
 				menu.mc.displayGuiScreen(new GuiSelectWorld(menu));
-			}
-			case CREATE_WORLD: {
+				break;
+			case CREATE_WORLD:
 				menu.mc.displayGuiScreen(new GuiCreateWorld(menu));
-			}
-			case MULTIPLAYER: {
+				break;
+			case MULTIPLAYER:
 				menu.mc.displayGuiScreen(new GuiMultiplayer(menu));
-			}
-			case OPTIONS: {
+				break;
+			case OPTIONS:
 				menu.mc.displayGuiScreen(new GuiOptions(menu, menu.mc.gameSettings));
-			}
-			case LANGUAGES: {
+				break;
+			case LANGUAGES:
 				menu.mc.displayGuiScreen(new GuiLanguage(menu, menu.mc.gameSettings, menu.mc.getLanguageManager()));
-			}
+				break;
 		}
 	}
 }
