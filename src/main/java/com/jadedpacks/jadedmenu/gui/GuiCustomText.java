@@ -24,6 +24,6 @@ class GuiCustomText extends Gui {
 		final int xPos = position.modX(mc.currentScreen.width, xPosition),
 			yPos = position.modY(mc.currentScreen.height, yPosition);
 		final FontRenderer renderer = mc.fontRenderer;
-		drawString(renderer, I18n.getString(hoverText != null && mouseX > xPos && mouseY > yPos && mouseX < xPos + renderer.getStringWidth(text) && mouseY < yPos + renderer.FONT_HEIGHT? hoverText : text), xPosition, yPosition, color);
+		drawString(renderer, I18n.getString(hoverText != null && mouseX > xPos && mouseY > yPos && mouseX < xPos + renderer.getStringWidth(text) && mouseY < yPos + renderer.FONT_HEIGHT ? hoverText : text), xPos, yPos, color);
 	}
 }

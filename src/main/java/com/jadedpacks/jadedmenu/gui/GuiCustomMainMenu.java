@@ -1,56 +1,92 @@
 package com.jadedpacks.jadedmenu.gui;
 
+import com.jadedpacks.jadedmenu.JadedMenu;
+import com.jadedpacks.jadedmenu.gui.action.ActionFunction;
 import com.jadedpacks.jadedmenu.gui.action.ActionOpenGui;
 import com.jadedpacks.jadedmenu.gui.action.ActionOpenLink;
 import com.jadedpacks.jadedmenu.gui.action.ActionQuit;
 import com.jadedpacks.jadedmenu.utils.Position;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeVersion;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class GuiCustomMainMenu extends GuiMainMenu {
-	private List<GuiCustomText> texts = Arrays.asList(
-		new GuiCustomText(Position.BOTTOM_CENTER, -70, -40, 10194114, "modpack.name", null),
-		new GuiCustomText(Position.BOTTOM_CENTER, -70, -30, -1, "modpack.version", null),
-		new GuiCustomText(Position.BOTTOM_CENTER, -70, -20, 9222338, "By JadedPacks", null),
-		new GuiCustomText(Position.BOTTOM_CENTER, -70, -10, -1, "forge.version", null)
-	);
-	private List<GuiCustomImage> images = Arrays.asList(
+	private final List<GuiCustomText> texts;
+	private final List<GuiCustomImage> images = Arrays.asList(
 		new GuiCustomImage(Position.TOP_CENTER, -100, -40, 200, 1100, "jadedmenu:textures/gui/glass.png", null),
 		new GuiCustomImage(Position.TOP_CENTER, -40, 20, 80, 80, "jadedmenu:textures/gui/icon1.png", null)
 	);
 	private final ResourceLocation resourceBackground = new ResourceLocation("jadedmenu:textures/gui/background.png");
-	private String splashText = null;
+	private final JadedMenu jaded;
+	private final String issuesURL;
+
+	public GuiCustomMainMenu(final JadedMenu jaded) {
+		this.jaded = jaded;
+		texts = Arrays.asList(
+			new GuiCustomText(Position.BOTTOM_LEFT, 2, -40, 10194114, jaded.config.get("general", "modpack", "MODPACK.NAME").getString(), null),
+			new GuiCustomText(Position.BOTTOM_LEFT, 2, -30, 10194114, jaded.config.get("general", "version", "Development").getString(), null),
+			new GuiCustomText(Position.BOTTOM_LEFT, 2, -20, 10194114, "By JadedPacks", null),
+			new GuiCustomText(Position.BOTTOM_LEFT, 2, -10, 9222338, ForgeVersion.getVersion(), null)
+		);
+		issuesURL = jaded.config.get("general", "issues", "").getString();
+	}
 
 	public void initGui() {
-		buttonList.addAll(Arrays.asList(
-			new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, null, ActionOpenGui.SINGLEPLAYER),
-			new GuiCustomButton(6001, Position.CENTER, 1, 50, 70, 20, "menu.multiplayer", null, null, ActionOpenGui.MULTIPLAYER),
-			new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, null), // TODO: Open custom gui
-			new GuiCustomButton(6003, Position.CENTER, 1, 71, 70, 20, "menu.quit", "Awww, don't leave", "jadedmenu:textures/gui/buttonexit.png", new ActionQuit()),
-			new GuiCustomButton(6004, Position.BOTTOM_CENTER, -25, -25, 50, 20, "Patreon", null, null, new ActionOpenLink("http://google.com")) // TODO: Get a patreon link?
-		));
+		final List buttons;
+		if(!jaded.isExtra) {
+			buttons = Arrays.asList(
+				new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, null, ActionOpenGui.SINGLEPLAYER),
+				new GuiCustomButton(6001, Position.CENTER, 1, 50, 70, 20, "menu.multiplayer", null, null, ActionOpenGui.MULTIPLAYER),
+				new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, new ActionFunction(new Runnable() {
+					@Override
+					public void run() {
+						jaded.isExtra = true;
+						mc.displayGuiScreen(jaded.menu);
+					}
+				})),
+				new GuiCustomButton(6003, Position.CENTER, 1, 71, 70, 20, "menu.quit", "Awww :(", "jadedmenu:textures/gui/buttonexit.png", new ActionQuit())
+			);
+		} else {
+			buttons = Arrays.asList(
+				new GuiCustomButton(6005, Position.CENTER, -70, 50, 70, 20, "Mods", null, null, ActionOpenGui.MODS),
+				new GuiCustomButton(6006, Position.CENTER, 1, 50, 70, 20, "menu.options", null, null, ActionOpenGui.OPTIONS),
+				new GuiCustomButton(6007, Position.CENTER, -70, 71, 70, 20, "Language", null, null, ActionOpenGui.LANGUAGES),
+				new GuiCustomButton(6008, Position.CENTER, 1, 71, 70, 20, "Bug Reports", null, null, new ActionOpenLink("https://github.com/JadedPacks/" + issuesURL + "/issues")),
+				new GuiCustomButton(6009, Position.CENTER, -70, 92, 70, 20, "Discord", null, null, new ActionOpenLink("https://discord.gg/bkyMbv2")),
+				new GuiCustomButton(6010, Position.CENTER, 1, 92, 70, 20, "Go Back", null, null, new ActionFunction(new Runnable() {
+					@Override
+					public void run() {
+						jaded.isExtra = false;
+						mc.displayGuiScreen(jaded.menu);
+					}
+				}))
+			);
+		}
+		buttonList.addAll(buttons);
 	}
 
 	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		GL11.glColor4f(1, 1, 1, 1);
 		mc.getTextureManager().bindTexture(resourceBackground);
-		drawTexturedModalRect(0, 0, 0, 0, width, height);
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.startDrawingQuads();
+		tessellator.addVertexWithUV(width, height, 0, 1, 1);
+		tessellator.addVertexWithUV(width, 0, 0, 1, 0);
+		tessellator.addVertexWithUV(0, 0, 0, 0, 0);
+		tessellator.addVertexWithUV(0, height, 0, 0, 1);
+		tessellator.draw();
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
 		for(final GuiCustomImage image : images) {
 			image.drawImage(mc, mouseX, mouseY);
 		}
 		GL11.glDisable(3042);
-		// TODO: SplashText
-		if(splashText != null) {
-			drawCenteredString(fontRenderer, splashText, 0, -8, 16776960 /* color */);
-		}
-		// TODO: Text's are not drawing
 		for(final GuiCustomText text : texts) {
 			text.drawText(mc, mouseX, mouseY);
 		}

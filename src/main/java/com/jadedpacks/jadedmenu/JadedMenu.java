@@ -7,21 +7,28 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 
 @Mod(modid = "jadedmenu", name = "JadedMenu", version = "${mcversion}")
 public class JadedMenu {
+	public boolean isExtra = false;
+	public Configuration config;
+	public GuiCustomMainMenu menu;
+
 	@SideOnly(Side.CLIENT)
 	@Mod.EventHandler
 	public void preInit(final FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
+		config = new Configuration(event.getSuggestedConfigurationFile());
+		menu = new GuiCustomMainMenu(this);
 	}
 
 	@ForgeSubscribe
-	public void onOpenGui(GuiOpenEvent event) {
+	public void onOpenGui(final GuiOpenEvent event) {
 		if(event.gui instanceof GuiMainMenu) {
-			event.gui = new GuiCustomMainMenu();
+			event.gui = menu;
 		}
 	}
 }
