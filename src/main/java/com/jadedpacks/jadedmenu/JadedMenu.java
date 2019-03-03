@@ -11,7 +11,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 
-@Mod(modid = "jadedmenu", name = "JadedMenu", version = "${mcversion}")
+@Mod(modid = "jadedmenu", name = "JadedMenu", version = "@VERSION@")
 public class JadedMenu {
 	public boolean isExtra = false;
 	public Configuration config;
