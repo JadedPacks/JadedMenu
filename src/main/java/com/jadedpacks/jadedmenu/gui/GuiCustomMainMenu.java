@@ -7,7 +7,6 @@ import com.jadedpacks.jadedmenu.gui.action.ActionOpenLink;
 import com.jadedpacks.jadedmenu.gui.action.ActionQuit;
 import com.jadedpacks.jadedmenu.proxy.ClientProxy;
 import com.jadedpacks.jadedmenu.utils.Position;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.Tessellator;
@@ -43,9 +42,12 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 			buttons = Arrays.asList(
 				new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, null, ActionOpenGui.SINGLEPLAYER),
 				new GuiCustomButton(6001, Position.CENTER, 1, 50, 70, 20, "menu.multiplayer", null, null, ActionOpenGui.MULTIPLAYER),
-				new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, new ActionFunction(() -> {
-					JadedMenu.isExtra = true;
-					mc.displayGuiScreen(ClientProxy.menu);
+				new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, new ActionFunction(new Runnable() {
+					@Override
+					public void run() {
+						JadedMenu.isExtra =true;
+						mc.displayGuiScreen(ClientProxy.menu);
+					}
 				})),
 				new GuiCustomButton(6003, Position.CENTER, 1, 71, 70, 20, "menu.quit", "Awww :(", "jadedmenu:textures/gui/buttonexit.png", new ActionQuit())
 			);
@@ -56,9 +58,12 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 				new GuiCustomButton(6007, Position.CENTER, -70, 71, 70, 20, "Language", null, null, ActionOpenGui.LANGUAGES),
 				new GuiCustomButton(6008, Position.CENTER, 1, 71, 70, 20, "Bug Reports", null, null, new ActionOpenLink("https://github.com/JadedPacks/" + issuesURL + "/issues")),
 				new GuiCustomButton(6009, Position.CENTER, -70, 92, 70, 20, "Discord", null, null, new ActionOpenLink("https://discord.gg/bkyMbv2")),
-				new GuiCustomButton(6010, Position.CENTER, 1, 92, 70, 20, "Go Back", null, null, new ActionFunction(() -> {
-					JadedMenu.isExtra = false;
-					mc.displayGuiScreen(ClientProxy.menu);
+				new GuiCustomButton(6010, Position.CENTER, 1, 92, 70, 20, "Go Back", null, null, new ActionFunction(new Runnable() {
+					@Override
+					public void run() {
+						JadedMenu.isExtra = false;
+						mc.displayGuiScreen(ClientProxy.menu);
+					}
 				}))
 			);
 		}

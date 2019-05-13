@@ -7,6 +7,7 @@ import net.minecraft.client.resources.I18n;
 
 import java.awt.*;
 import java.net.URI;
+import java.util.Arrays;
 
 public class GuiCustomConfirmOpenLink extends GuiYesNo {
 	private String link;
@@ -17,9 +18,11 @@ public class GuiCustomConfirmOpenLink extends GuiYesNo {
 	}
 
 	public void initGui() {
-		buttonList.add(new GuiButton(0, width / 3 - 83, height / 6 + 96, 100, 20, I18n.getString("gui.yes")));
-		buttonList.add(new GuiButton(2, width / 3 - 83 + 105, height / 6 + 96, 100, 20, I18n.getString("chat.copy")));
-		buttonList.add(new GuiButton(1, width / 3 - 83 + 210, height / 6 + 96, 100, 20, I18n.getString("gui.no")));
+		buttonList.addAll(Arrays.asList(
+			new GuiButton(0, width / 3 - 83, height / 6 + 96, 100, 20, I18n.getString("gui.yes")),
+			new GuiButton(2, width / 3 - 83 + 105, height / 6 + 96, 100, 20, I18n.getString("chat.copy")),
+			new GuiButton(1, width / 3 - 83 + 210, height / 6 + 96, 100, 20, I18n.getString("gui.no"))
+		));
 	}
 
 	protected void actionPerformed(GuiButton button) {
