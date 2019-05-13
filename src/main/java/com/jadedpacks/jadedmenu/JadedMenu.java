@@ -1,7 +1,9 @@
 package com.jadedpacks.jadedmenu;
 
 import com.jadedpacks.jadedmenu.gui.GuiCustomMainMenu;
+import com.jadedpacks.jadedmenu.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,22 +15,13 @@ import net.minecraftforge.event.ForgeSubscribe;
 
 @Mod(modid = "jadedmenu", name = "JadedMenu", version = "@VERSION@")
 public class JadedMenu {
-	public boolean isExtra = false;
-	public Configuration config;
-	public GuiCustomMainMenu menu;
+	@SidedProxy(clientSide = "com.jadedpacks.jadedmenu.proxy.ClientProxy", serverSide = "com.jadedpacks.jadedmenu.proxy.CommonProxy")
+	public static CommonProxy proxy;
+	public static boolean isExtra = false;
+	public static Configuration config;
 
-	@SideOnly(Side.CLIENT)
 	@Mod.EventHandler
 	public void preInit(final FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(this);
 		config = new Configuration(event.getSuggestedConfigurationFile());
-		menu = new GuiCustomMainMenu(this);
-	}
-
-	@ForgeSubscribe
-	public void onOpenGui(final GuiOpenEvent event) {
-		if(event.gui instanceof GuiMainMenu) {
-			event.gui = menu;
-		}
 	}
 }

@@ -5,6 +5,7 @@ import com.jadedpacks.jadedmenu.gui.action.ActionFunction;
 import com.jadedpacks.jadedmenu.gui.action.ActionOpenGui;
 import com.jadedpacks.jadedmenu.gui.action.ActionOpenLink;
 import com.jadedpacks.jadedmenu.gui.action.ActionQuit;
+import com.jadedpacks.jadedmenu.proxy.ClientProxy;
 import com.jadedpacks.jadedmenu.utils.Position;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -23,32 +24,27 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 		new GuiCustomImage(Position.TOP_CENTER, -40, 20, 80, 80, "jadedmenu:textures/gui/icon1.png", null)
 	);
 	private final ResourceLocation resourceBackground = new ResourceLocation("jadedmenu:textures/gui/background.png");
-	private final JadedMenu jaded;
 	private final String issuesURL;
 
-	public GuiCustomMainMenu(final JadedMenu jaded) {
-		this.jaded = jaded;
+	public GuiCustomMainMenu() {
 		texts = Arrays.asList(
-			new GuiCustomText(Position.BOTTOM_LEFT, 2, -40, 10194114, jaded.config.get("general", "modpack", "MODPACK.NAME").getString(), null),
-			new GuiCustomText(Position.BOTTOM_LEFT, 2, -30, 10194114, jaded.config.get("general", "version", "Development").getString(), null),
+			new GuiCustomText(Position.BOTTOM_LEFT, 2, -40, 10194114, JadedMenu.config.get("general", "modpack", "MODPACK.NAME").getString(), null),
+			new GuiCustomText(Position.BOTTOM_LEFT, 2, -30, 10194114, JadedMenu.config.get("general", "version", "Development").getString(), null),
 			new GuiCustomText(Position.BOTTOM_LEFT, 2, -20, 10194114, "By JadedPacks", null),
 			new GuiCustomText(Position.BOTTOM_LEFT, 2, -10, 9222338, ForgeVersion.getVersion(), null)
 		);
-		issuesURL = jaded.config.get("general", "issues", "").getString();
+		issuesURL = JadedMenu.config.get("general", "issues", "").getString();
 	}
 
 	public void initGui() {
-		final List buttons;
-		if(!jaded.isExtra) {
+		final List<GuiCustomButton> buttons;
+		if(!JadedMenu.isExtra) {
 			buttons = Arrays.asList(
 				new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, null, ActionOpenGui.SINGLEPLAYER),
 				new GuiCustomButton(6001, Position.CENTER, 1, 50, 70, 20, "menu.multiplayer", null, null, ActionOpenGui.MULTIPLAYER),
-				new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, new ActionFunction(new Runnable() {
-					@Override
-					public void run() {
-						jaded.isExtra = true;
-						mc.displayGuiScreen(jaded.menu);
-					}
+				new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, new ActionFunction(() -> {
+					JadedMenu.isExtra = true;
+					mc.displayGuiScreen(ClientProxy.menu);
 				})),
 				new GuiCustomButton(6003, Position.CENTER, 1, 71, 70, 20, "menu.quit", "Awww :(", "jadedmenu:textures/gui/buttonexit.png", new ActionQuit())
 			);
@@ -59,12 +55,9 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 				new GuiCustomButton(6007, Position.CENTER, -70, 71, 70, 20, "Language", null, null, ActionOpenGui.LANGUAGES),
 				new GuiCustomButton(6008, Position.CENTER, 1, 71, 70, 20, "Bug Reports", null, null, new ActionOpenLink("https://github.com/JadedPacks/" + issuesURL + "/issues")),
 				new GuiCustomButton(6009, Position.CENTER, -70, 92, 70, 20, "Discord", null, null, new ActionOpenLink("https://discord.gg/bkyMbv2")),
-				new GuiCustomButton(6010, Position.CENTER, 1, 92, 70, 20, "Go Back", null, null, new ActionFunction(new Runnable() {
-					@Override
-					public void run() {
-						jaded.isExtra = false;
-						mc.displayGuiScreen(jaded.menu);
-					}
+				new GuiCustomButton(6010, Position.CENTER, 1, 92, 70, 20, "Go Back", null, null, new ActionFunction(() -> {
+					JadedMenu.isExtra = false;
+					mc.displayGuiScreen(ClientProxy.menu);
 				}))
 			);
 		}
@@ -90,8 +83,8 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 		for(final GuiCustomText text : texts) {
 			text.drawText(mc, mouseX, mouseY);
 		}
-		for(final GuiButton button : (List<GuiButton>) buttonList) {
-			button.drawButton(mc, mouseX, mouseY);
+		for(final Object button : buttonList) {
+			((GuiButton) button).drawButton(mc, mouseX, mouseY);
 		}
 	}
 
