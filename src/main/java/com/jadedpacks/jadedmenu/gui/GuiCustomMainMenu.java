@@ -7,6 +7,7 @@ import com.jadedpacks.jadedmenu.gui.action.ActionOpenLink;
 import com.jadedpacks.jadedmenu.gui.action.ActionQuit;
 import com.jadedpacks.jadedmenu.proxy.ClientProxy;
 import com.jadedpacks.jadedmenu.utils.Position;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GuiCustomMainMenu extends GuiMainMenu {
+	public Minecraft mc;
 	private final List<GuiCustomText> texts;
 	private final List<GuiCustomImage> images = Arrays.asList(
 		new GuiCustomImage(Position.TOP_CENTER, -100, -40, 200, 1100, "jadedmenu:textures/gui/glass.png", null),
@@ -27,6 +29,7 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 	private final String issuesURL;
 
 	public GuiCustomMainMenu() {
+		this.mc = mc;
 		texts = Arrays.asList(
 			new GuiCustomText(Position.BOTTOM_LEFT, 2, -40, 10194114, JadedMenu.config.get("general", "modpack", "MODPACK.NAME").getString(), null),
 			new GuiCustomText(Position.BOTTOM_LEFT, 2, -30, 10194114, JadedMenu.config.get("general", "version", "Development").getString(), null),
