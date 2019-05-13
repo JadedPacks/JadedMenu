@@ -23,7 +23,7 @@ class GuiCustomText extends Gui {
 	void drawText(final Minecraft mc, final int mouseX, final int mouseY) {
 		final int xPos = position.modX(mc.currentScreen.width, xPosition),
 			yPos = position.modY(mc.currentScreen.height, yPosition);
-		final FontRenderer renderer = mc.fontRenderer;
-		drawString(renderer, I18n.getString(hoverText != null && mouseX > xPos && mouseY > yPos && mouseX < xPos + renderer.getStringWidth(text) && mouseY < yPos + renderer.FONT_HEIGHT ? hoverText : text), xPos, yPos, color);
+		final FontRenderer renderer = mc.fontRendererObj;
+		drawString(renderer, I18n.format(hoverText != null && mouseX > xPos && mouseY > yPos && mouseX < xPos + renderer.getStringWidth(text) && mouseY < yPos + renderer.FONT_HEIGHT ? hoverText : text), xPos, yPos, color);
 	}
 }

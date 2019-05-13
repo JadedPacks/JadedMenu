@@ -4,7 +4,7 @@ import com.jadedpacks.jadedmenu.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 @Mod(modid = "jadedmenu", name = "JadedMenu", version = "@VERSION@")
 public class JadedMenu {

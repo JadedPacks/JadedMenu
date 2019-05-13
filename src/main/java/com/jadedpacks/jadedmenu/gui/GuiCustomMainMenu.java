@@ -9,6 +9,7 @@ import com.jadedpacks.jadedmenu.proxy.ClientProxy;
 import com.jadedpacks.jadedmenu.utils.Position;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeVersion;
@@ -17,7 +18,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.Arrays;
 import java.util.List;
 
-public class GuiCustomMainMenu extends GuiMainMenu {
+public class GuiCustomMainMenu extends GuiMainMenu implements GuiYesNoCallback {
 	private final List<GuiCustomText> texts;
 	private final List<GuiCustomImage> images = Arrays.asList(
 		new GuiCustomImage(Position.TOP_CENTER, -100, -40, 200, 1100, "jadedmenu:textures/gui/glass.png", null),

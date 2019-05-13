@@ -37,7 +37,7 @@ public class GuiCustomButton extends GuiButton {
 		} else if(hovered) {
 			color = 16777120;
 		}
-		drawCenteredString(mc.fontRenderer, I18n.getString(hovered && hoverText != null ? hoverText : displayString), xPos + width / 2, yPos + (height - 8) / 2, color);
+		drawCenteredString(mc.fontRendererObj, I18n.format(hovered && hoverText != null ? hoverText : displayString), xPos + width / 2, yPos + (height - 8) / 2, color);
 	}
 
 	@Override
