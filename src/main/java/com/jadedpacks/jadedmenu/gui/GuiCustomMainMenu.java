@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GuiCustomMainMenu extends GuiMainMenu implements GuiYesNoCallback {
+	private List<GuiCustomButton> buttons;
 	private final List<GuiCustomText> texts;
-	private final List<GuiCustomButton> buttons;
 	private final List<GuiCustomImage> images = Arrays.asList(
 		new GuiCustomImage(Position.TOP_CENTER, -100, -40, 200, 1100, "jadedmenu:textures/gui/glass.png", null),
 		new GuiCustomImage(Position.TOP_CENTER, -40, 20, 80, 80, "jadedmenu:textures/gui/icon1.png", null)
