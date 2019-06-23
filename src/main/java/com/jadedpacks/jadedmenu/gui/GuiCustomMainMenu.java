@@ -20,6 +20,7 @@ import java.util.List;
 
 public class GuiCustomMainMenu extends GuiMainMenu implements GuiYesNoCallback {
 	private final List<GuiCustomText> texts;
+	private final List<GuiCustomButton> buttons;
 	private final List<GuiCustomImage> images = Arrays.asList(
 		new GuiCustomImage(Position.TOP_CENTER, -100, -40, 200, 1100, "jadedmenu:textures/gui/glass.png", null),
 		new GuiCustomImage(Position.TOP_CENTER, -40, 20, 80, 80, "jadedmenu:textures/gui/icon1.png", null)
@@ -38,7 +39,6 @@ public class GuiCustomMainMenu extends GuiMainMenu implements GuiYesNoCallback {
 	}
 
 	public void initGui() {
-		final List<GuiCustomButton> buttons;
 		if(!JadedMenu.isExtra) {
 			buttons = Arrays.asList(
 				new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, null, ActionOpenGui.SINGLEPLAYER),
@@ -68,7 +68,6 @@ public class GuiCustomMainMenu extends GuiMainMenu implements GuiYesNoCallback {
 				}))
 			);
 		}
-		buttonList.addAll(buttons);
 	}
 
 	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
@@ -90,8 +89,8 @@ public class GuiCustomMainMenu extends GuiMainMenu implements GuiYesNoCallback {
 		for(final GuiCustomText text : texts) {
 			text.drawText(mc, mouseX, mouseY);
 		}
-		for(final Object button : buttonList) {
-			((GuiButton) button).drawButton(mc, mouseX, mouseY);
+		for(final GuiCustomButton button : buttons) {
+			button.drawButton(mc, mouseX, mouseY);
 		}
 	}
 
