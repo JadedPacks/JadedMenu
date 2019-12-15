@@ -1,7 +1,6 @@
 package com.jadedpacks.jadedmenu.gui.action;
 
 import com.jadedpacks.jadedmenu.gui.GuiCustomMainMenu;
-import com.jadedpacks.jadedmenu.gui.GuiCustomMultiplayer;
 import cpw.mods.fml.client.GuiModList;
 import net.minecraft.client.gui.*;
 
@@ -26,7 +25,7 @@ public enum ActionOpenGui implements IAction {
 				menu.mc.displayGuiScreen(new GuiCreateWorld(menu));
 				break;
 			case MULTIPLAYER:
-				menu.mc.displayGuiScreen(new GuiCustomMultiplayer(menu));
+				menu.mc.displayGuiScreen(new GuiMultiplayer(menu));
 				break;
 			case OPTIONS:
 				menu.mc.displayGuiScreen(new GuiOptions(menu, menu.mc.gameSettings));
