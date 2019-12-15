@@ -45,7 +45,7 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 				new GuiCustomButton(6002, Position.CENTER, -70, 71, 70, 20, "Extras", null, null, new ActionFunction(new Runnable() {
 					@Override
 					public void run() {
-						JadedMenu.isExtra =true;
+						JadedMenu.isExtra = true;
 						mc.displayGuiScreen(ClientProxy.menu);
 					}
 				})),
