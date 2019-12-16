@@ -7,7 +7,6 @@ import com.jadedpacks.jadedmenu.gui.action.ActionOpenLink;
 import com.jadedpacks.jadedmenu.gui.action.ActionQuit;
 import com.jadedpacks.jadedmenu.proxy.ClientProxy;
 import com.jadedpacks.jadedmenu.utils.Position;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
@@ -18,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GuiCustomMainMenu extends GuiMainMenu {
+	private List<GuiCustomButton> buttons;
 	private final List<GuiCustomText> texts;
 	private final List<GuiCustomImage> images = Arrays.asList(
 		new GuiCustomImage(Position.TOP_CENTER, -100, -40, 200, 1100, "jadedmenu:textures/gui/glass.png", null),
@@ -37,7 +37,6 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 	}
 
 	public void initGui() {
-		final List<GuiCustomButton> buttons;
 		if(!JadedMenu.isExtra) {
 			buttons = Arrays.asList(
 				new GuiCustomButton(6000, Position.CENTER, -70, 50, 70, 20, "menu.singleplayer", null, null, ActionOpenGui.SINGLEPLAYER),
@@ -67,7 +66,6 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 				}))
 			);
 		}
-		buttonList.addAll(buttons);
 	}
 
 	public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
@@ -89,17 +87,22 @@ public class GuiCustomMainMenu extends GuiMainMenu {
 		for(final GuiCustomText text : texts) {
 			text.drawText(mc, mouseX, mouseY);
 		}
-		for(final Object button : buttonList) {
-			((GuiButton) button).drawButton(mc, mouseX, mouseY);
+		for(final GuiCustomButton button : buttons) {
+			button.drawButton(mc, mouseX, mouseY);
 		}
 	}
 
 	@Override
-	protected void actionPerformed(final GuiButton button) {
-		if(button instanceof GuiCustomButton) {
-			final GuiCustomButton butt = (GuiCustomButton) button;
-			if(butt.action != null) {
-				butt.action.run(this);
+	protected void mouseClicked(final int x, final int y, final int button) {
+		if(button == 0) {
+			for(final GuiCustomButton guibutton : buttons) {
+				if(guibutton.mousePressed(mc, x, y)) {
+					mc.sndManager.playSoundFX("random.click", 1, 1);
+					if(guibutton.action != null) {
+						guibutton.action.run(this);
+					}
+					break;
+				}
 			}
 		}
 	}
