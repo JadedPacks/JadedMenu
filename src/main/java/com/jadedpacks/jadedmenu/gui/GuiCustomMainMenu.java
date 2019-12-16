@@ -7,7 +7,7 @@ import com.jadedpacks.jadedmenu.gui.action.ActionOpenLink;
 import com.jadedpacks.jadedmenu.gui.action.ActionQuit;
 import com.jadedpacks.jadedmenu.proxy.ClientProxy;
 import com.jadedpacks.jadedmenu.utils.Position;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.renderer.Tessellator;
@@ -93,13 +93,17 @@ public class GuiCustomMainMenu extends GuiMainMenu implements GuiYesNoCallback {
 			button.drawButton(mc, mouseX, mouseY);
 		}
 	}
-
 	@Override
-	protected void actionPerformed(final GuiButton button) {
-		if(button instanceof GuiCustomButton) {
-			final GuiCustomButton butt = (GuiCustomButton) button;
-			if(butt.action != null) {
-				butt.action.run(this);
+	protected void mouseClicked(final int x, final int y, final int button) {
+		if(button == 0) {
+			for(final GuiCustomButton guibutton : buttons) {
+				if(guibutton.mousePressed(mc, x, y)) {
+					mc.getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press"), 1));
+					if(guibutton.action != null) {
+						guibutton.action.run(this);
+					}
+					break;
+				}
 			}
 		}
 	}
